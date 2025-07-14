@@ -23,7 +23,8 @@ export default function RootLayout() {
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="screens/organization-selection" options={{ headerShown: false }} />
-        <Stack.Screen name="screens/organization-details" options={{ headerShown: false }} />
+        <Stack.Screen name="screens/task-tracker" options={{ headerShown: false }} />
+        <Stack.Screen name="screens/task-management" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

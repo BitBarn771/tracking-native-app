@@ -1,27 +1,35 @@
 import { router } from 'expo-router';
 import React from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAppStore } from '../../store/useAppStore';
 
 export default function OrganizationSelectionScreen() {
-    const { organizations, setSelectedOrganization } = useAppStore();
+    const { organizations, setSelectedOrganization, tasks, addTask } = useAppStore();
 
     const handleOrganizationSelect = (organization: any) => {
         setSelectedOrganization(organization);
-        Alert.alert(
-            'Organization Selected',
-            `${organization.name} has been selected.`,
-            [
-                {
-                    text: 'OK',
-                    onPress: () => router.push('/screens/organization-details')
-                }
-            ]
-        );
+
+        // Check if hardcoded task exists, if not add it
+        const hasHardcodedTask = tasks.some(task => task.id === 'hardcoded-task-1');
+        if (!hasHardcodedTask) {
+            const hardcodedTask = {
+                id: 'hardcoded-task-1',
+                name: 'Location Tracking Task',
+                organization: organization,
+                startTime: null,
+                elapsedTime: 0,
+                isTracking: false,
+                activities: [],
+            };
+            addTask(hardcodedTask);
+        }
+
+        router.push('/screens/task-tracker')
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>Select Organization</Text>
                 <Text style={styles.subtitle}>Choose your organization to continue</Text>
@@ -42,7 +50,7 @@ export default function OrganizationSelectionScreen() {
                     </TouchableOpacity>
                 ))}
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 

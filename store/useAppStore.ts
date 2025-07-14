@@ -58,7 +58,17 @@ export const useAppStore = create<AppState>()(
                 { id: 'B', name: 'Organization B', icon: '🏛️', color: '#34C759' },
                 { id: 'C', name: 'Organization C', icon: '🏭', color: '#FF9500' },
             ],
-            tasks: [],
+            tasks: [
+                {
+                    id: 'hardcoded-task-1',
+                    name: 'Location Tracking Task',
+                    organization: { id: 'A', name: 'Organization A', icon: '🏢', color: '#007AFF' },
+                    startTime: null,
+                    elapsedTime: 0,
+                    isTracking: false,
+                    activities: [],
+                }
+            ],
             currentTask: null,
             elapsedTime: 0,
 
@@ -208,6 +218,19 @@ export const useAppStore = create<AppState>()(
                                 }))
                                 : [],
                         }));
+                        // Ensure hardcoded task is present
+                        const hasHardcodedTask = state.tasks.some(task => task.id === 'hardcoded-task-1');
+                        if (!hasHardcodedTask) {
+                            state.tasks.push({
+                                id: 'hardcoded-task-1',
+                                name: 'Location Tracking Task',
+                                organization: { id: 'A', name: 'Organization A', icon: '🏢', color: '#007AFF' },
+                                startTime: null,
+                                elapsedTime: 0,
+                                isTracking: false,
+                                activities: [],
+                            });
+                        }
                     }
                     // Fix dates in currentTask
                     if (state.currentTask) {
